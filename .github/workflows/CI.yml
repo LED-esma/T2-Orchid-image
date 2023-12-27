@@ -18,7 +18,8 @@ jobs:
       run: |
         wget https://github.com/Vanilla-OS/Vib/releases/download/v0.3.1/vib
         chmod +x vib
-        vib build recipe.yml
+    - name: Testing
+      run: ./vib build recipe.yml
 
     - name: Build the Docker image
       run: docker image build -f Containerfile --tag led-esma .
