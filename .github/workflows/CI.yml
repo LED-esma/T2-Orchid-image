@@ -5,6 +5,10 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+env:
+    REGISTRY_USER: ${{ github.actor }}
+    REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
 
   build:
@@ -22,7 +26,9 @@ jobs:
 
     - name: Build the Docker image
       run: docker image build -f Containerfile --tag led-esma .
-    - uses: actions/upload-artifact@v3
-      with:
-        name: VanillaOS T2 Docker
-        path: builds/
+
+    # Push the image to GHCR (Image Registry)
+    - name: Push To GHCR
+      run: |
+        docker login ghcr.io -u ${{ env.REGISTRY_USER }} -p ${{ env.REGISTRY_PASSWORD }}
+        docker image push "ledesma"
