@@ -33,7 +33,4 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-    
-    # Push the image to GHCR (Image Registry)
-    - name: Push To GHCR
-      run: docker image push "led-esma"
+        run: docker image push "led-esma"
