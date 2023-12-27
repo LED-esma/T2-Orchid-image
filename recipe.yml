@@ -1,0 +1,52 @@
+base: ghcr.io/vanilla-os/desktop:main
+name: Vanilla Desktop Nvidia
+id: vanilla-nvidia
+labels:
+  maintainer: LED-esma
+args:
+  DEBIAN_FRONTEND: noninteractive
+runs:
+- echo 'APT::Install-Recommends "1";' > /etc/apt/apt.conf.d/01norecommends
+
+modules:
+- name: init-setup
+  type: shell
+  commands:
+  - lpkg --unlock
+  - apt update
+
+- name: t2-customization
+  type: curl
+  commands:
+  - curl -s --compressed "https://adityagarg8.github.io/t2-ubuntu-repo/KEY.gpg" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/t2-ubuntu-repo.gpg > /dev/null
+  - sudo curl -s --compressed -o /etc/apt/sources.list.d/t2.list "https://adityagarg8.github.io/t2-ubuntu-repo/t2.list
+  
+- name: installation
+  type: shell
+  source:
+    packages:
+    - t2-kernel-script-debian
+    - tiny-dfr
+  
+- name: vanilla-tools
+  type: shell
+  source:
+    type: tar
+    # switch to production build once in production
+    url: https://github.com/Vanilla-OS/vanilla-tools/releases/download/continuous/vanilla-tools.tar.gz
+  commands:
+  - mkdir -p /usr/bin
+  - cp /sources/vanilla-tools/nrun /usr/bin/nrun
+  - chmod +x /usr/bin/nrun
+
+- name: reconfigure-gdm
+  type: shell
+  commands:
+  - sed -i '/^RUN+="\/usr\/libexec\/gdm-runtime-config/ s/^/# /' /usr/lib/udev/rules.d/61-gdm.rules
+
+- name: cleanup
+  type: shell
+  commands:
+  - apt autoremove -y
+  - apt clean
+  - lpkg --lock
