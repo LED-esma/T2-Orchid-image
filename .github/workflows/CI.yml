@@ -25,7 +25,7 @@ jobs:
         ./vib build recipe.yml
 
     - name: Build the Docker image
-      run: docker image build -f Containerfile --tag led-esma .
+      run: docker image build -f Containerfile --tag ghcr.io/led-esma/t2desktop:main .
 
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v3
@@ -35,4 +35,4 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Publish to GHCR
-      run: docker image push -a "led-esma"
+      run: docker image push -a "ghcr.io/led-esma/t2desktop:main"
