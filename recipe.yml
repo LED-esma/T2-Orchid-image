@@ -1,5 +1,5 @@
 base: ghcr.io/vanilla-os/desktop:main
-name: Vanilla Desktop Nvidia
+name: T2 Orchid
 id: vanilla-nvidia
 labels:
   maintainer: LED-esma
@@ -19,6 +19,7 @@ modules:
   type: shell
   source: 
     url: https://adityagarg8.github.io/t2-ubuntu-repo/
+    type: apt
     packages:
     - t2-kernel-script-debian
     - tiny-dfr
