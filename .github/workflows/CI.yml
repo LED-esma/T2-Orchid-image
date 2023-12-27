@@ -27,8 +27,13 @@ jobs:
     - name: Build the Docker image
       run: docker image build -f Containerfile --tag led-esma .
 
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    
     # Push the image to GHCR (Image Registry)
     - name: Push To GHCR
-      run: |
-        docker login ghcr.io -u ${{ env.REGISTRY_USER }} -p ${{ env.REGISTRY_PASSWORD }}
-        docker image push "led-esma"
+      run: docker image push "led-esma"
