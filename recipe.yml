@@ -46,7 +46,6 @@ modules:
   - sed -i '/^RUN+="\/usr\/libexec\/gdm-runtime-config/ s/^/# /' /usr/lib/udev/rules.d/61-gdm.rules
 
 - name: cleanup
-- name: cleanup
   type: shell
   commands:
   - apt autoremove -y
