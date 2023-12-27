@@ -1,0 +1,29 @@
+name: Vib Build
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Vib
+      run: |
+        wget https://github.com/Vanilla-OS/Vib/releases/download/v0.3.1/vib
+        chmod +x vib
+        ./vib build recipe.yml
+
+    - name: Build the Docker image
+      run: docker image build -f Containerfile --tag ghcr.io/vanilla-os/desktop:main .
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: VanillaOS T2 Docker
+        path: builds/
