@@ -17,8 +17,7 @@ modules:
 
 - name: t2-addition
   type: apt
-  source: 
-    url: https://adityagarg8.github.io/t2-ubuntu-repo/
+  source: https://adityagarg8.github.io/t2-ubuntu-repo/
     packages:
     - t2-kernel-script-debian
     - tiny-dfr
