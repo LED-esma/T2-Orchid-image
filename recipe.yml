@@ -16,7 +16,7 @@ modules:
   - apt update
 
 - name: t2-addition
-  type: shell
+  type: apt
   source: 
     url: https://adityagarg8.github.io/t2-ubuntu-repo/
     packages:
