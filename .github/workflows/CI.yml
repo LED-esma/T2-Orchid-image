@@ -4,6 +4,10 @@ on:
   push:
     branches: [ "main" ]
   workflow_dispatch:
+    
+env:
+  REGISTRY_USER: ${{ github.actor }}
+  REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
 permissions:
   contents: write
@@ -27,12 +31,8 @@ jobs:
     - name: Build the Docker image
       run: docker image build -f Containerfile --tag ghcr.io/led-esma/t2desktop:main .
 
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@2
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Publish to GHCR
-      run: docker image push "ghcr.io/led-esma/t2desktop:main"
+      run: |
+       docker login ghcr.io -u ${{ env.REGISTRY_USER }} -p ${{ env.REGISTRY_PASSWORD }}
+       docker image push "ghcr.io/led-esma/t2desktop:main"
+
