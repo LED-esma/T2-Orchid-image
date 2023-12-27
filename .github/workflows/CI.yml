@@ -32,7 +32,7 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ github.token }}
     
     # Push the image to GHCR (Image Registry)
     - name: Push To GHCR
