@@ -21,7 +21,7 @@ jobs:
         ./vib build recipe.yml
 
     - name: Build the Docker image
-      run: docker image build -f Containerfile --tag LED-esma
+      run: docker image build -f Containerfile --tag LED-esma .
     - uses: actions/upload-artifact@v3
       with:
         name: VanillaOS T2 Docker
