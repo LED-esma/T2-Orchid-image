@@ -19,7 +19,6 @@ modules:
   type: shell
   source: 
     url: https://adityagarg8.github.io/t2-ubuntu-repo/
-    type: apt
     packages:
     - t2-kernel-script-debian
     - tiny-dfr
